@@ -2,6 +2,8 @@ const express = require("express");
 const stripe = require("stripe");
 const router = express.Router();
 
+const { getOauthUrl } = require("../utils/getOauthUrl");
+
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try {
@@ -11,6 +13,7 @@ router.get("/", async function (req, res, next) {
       grant_type: "authorization_code",
       code,
     });
+    console.log("responseFromStripe:", responseFromStripe);
     const connectedAccountId = responseFromStripe.stripe_user_id;
     const products = await stripeInstance.products.list(
       {
@@ -42,6 +45,7 @@ router.get("/", async function (req, res, next) {
   res.render("redirected", {
     title: "Redirected Page",
     connectedAccountId: "Connected account id unavailable",
+    oauthUrl: getOauthUrl(),
   });
 });
 
