@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p The connected account id is: #{connectedAccountId}
+
+  if productsData
+    div
+      h2 Below are a list of products
+      ul
+        each product in productsData
+          li
+            p 
+              strong Product ID: 
+              span #{ product.id}
+            p 
+              strong Product Name: 
+              span #{ product.name}
+            p 
+              strong Product Description: 
+              span #{product.description}
+            each src in product.imagesSrc
+              p 
+                strong Image for 
+                span #{product.name}:
+              img(src=src, alt=product.name)
+  else
+    div
+      p Account is not connected. 
+      a(href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_JnzbUNjtrCbacjRPjTkKWvTItYkAbYTA&scope=read_write") Click here to connect account: 
+
