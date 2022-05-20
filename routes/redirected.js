@@ -13,6 +13,7 @@ router.get("/", async function (req, res, next) {
       grant_type: "authorization_code",
       code,
     });
+    console.log({ code });
     console.log("responseFromStripe:", responseFromStripe);
     const connectedAccountId = responseFromStripe.stripe_user_id;
     const products = await stripeInstance.products.list(
